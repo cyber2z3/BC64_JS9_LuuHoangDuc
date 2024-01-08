@@ -2,9 +2,9 @@ var arrNV = [];
 function getValueUser() {
   //lấy dữ liệu 9 input bên ngoài khi người dùng nhập xong và bấm thêm sinh viên
   var arrInput = document.querySelectorAll("form input, form select");
-  //gọi tới tất cả cá thẻ span thông báo lỗi thông qua class text-danger
-  var arrError = document.querySelectorAll("form span.sp-thongbao");
 
+  //gọi tới tất cả cá thẻ span thông báo lỗi thông qua class text-danger
+  var arrError = document.querySelectorAll("form .sp-thongbao");
   var nhanVien = new NhanVien();
   var isValid = true; //validation variable
 
@@ -15,19 +15,21 @@ function getValueUser() {
     var inputId = arrInput[i].id;
     var inputValue = arrInput[i].value;
     var errorId = arrError[i].id;
+    console.log("inputId: " + inputId);
+    console.log("inputValue: " + inputValue);
+    console.log("errorId: " + errorId);
+    console.log(" ");
 
     //check validation
-    if (inputId == "tknv") {
-    }
+
+    checkEmtyValue(inputValue, errorId);
 
     // lấy dữ liệu
     nhanVien[inputId] = arrInput[i].value;
   }
-  console.log(nhanVien);
   return nhanVien;
 }
 document.getElementById("btnThemNV").onclick = function (event) {
-  console.log("submit checked");
   event.preventDefault();
 
   var nhanVien = getValueUser();
@@ -36,7 +38,6 @@ document.getElementById("btnThemNV").onclick = function (event) {
   document.getElementById("formQLNV").reset();
   luuDuLieuLocalStorage("arrNV", arrNV);
   hienThiDuLieu();
-  console.log(arrNV);
 };
 
 //hiển thị dữ liệu
@@ -178,21 +179,17 @@ function hienThiDuLieuDaLoc(arr, loaiNV) {
   if (arr == undefined) {
     arr = arrNV;
   }
-
+  loaiNV = loaiNV.charAt(0).toUpperCase() + loaiNV.slice(1);
   if (loaiNV == "" || loaiNV == undefined) {
-    console.log("dieu kien empty");
     return hienThiDuLieu();
   }
   var content = "";
   for (var i = 0; i < arr.length; i++) {
-    console.log("dieu kien k empty");
     var nhanVien = arr[i];
     var newNhanVien = new NhanVien();
 
     nhanVien = Object.assign(newNhanVien, nhanVien);
 
-    console.log(nhanVien.xepLoai());
-    console.log(loaiNV);
     if (nhanVien.xepLoai() == loaiNV) {
       content += `
           <tr>
@@ -213,9 +210,9 @@ function hienThiDuLieuDaLoc(arr, loaiNV) {
               </td>
           </tr>
           `;
-      document.getElementById("tableDanhSach").innerHTML = content;
     }
   }
+  document.getElementById("tableDanhSach").innerHTML = content;
 }
 
 //clear form when click btn

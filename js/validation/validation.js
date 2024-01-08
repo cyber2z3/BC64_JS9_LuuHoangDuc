@@ -1,10 +1,10 @@
 //check input có để trông hay không
 function checkEmtyValue(value, errorId) {
+  document.getElementById(errorId).style.display = "block";
   //nếu đi vào được if sẽ là trường hợp người dùng đã nhập dữ liệu vào rồi
   if (value) {
     document.getElementById(errorId).innerHTML = "";
     return true;
-    k;
   } else {
     //trường hợp khi value rỗng
     document.getElementById(errorId).innerHTML = "Vui lòng nhập không bỏ trống";
