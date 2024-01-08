@@ -51,7 +51,9 @@ function hienThiDuLieu(arr) {
   for (var i = 0; i < arr.length; i++) {
     var nhanVien = arr[i];
     var newNhanVien = new NhanVien();
+
     nhanVien = Object.assign(newNhanVien, nhanVien);
+
     content += `
     <tr>
         <td>${nhanVien.tknv}</td>
@@ -61,7 +63,7 @@ function hienThiDuLieu(arr) {
         <td>${nhanVien.chucvu}</td>
         <td>${nhanVien.tongLuong()}</td>
         <td>${nhanVien.xepLoai()}</td>
-        <td> 
+        <td>
         <button onclick="xoaDuLieuUser(${
           nhanVien.tknv
         })" class="btn btn-danger">Xoá</button>
@@ -128,7 +130,95 @@ function getInforUser(tknv) {
   console.log("hello: " + tknv);
   // document.querySelector(".modal.fade").classList.add("show");
   // document.getElementById("myModal").style.display = "block";
+  document.getElementById("btnThem").click();
+  var nhanVienIndex = {};
+  for (var i = 0; i < arrNV.length; i++) {
+    var nhanVien = arrNV[i];
+    console.log(nhanVien.tknv);
+    console.log(tknv);
+    if (nhanVien.tknv == tknv) nhanVienIndex = nhanVien;
+  }
+  var arrInput = document.querySelectorAll("form input, form select");
+  console.log(arrInput);
+  for (var i = 0; i < arrInput.length; i++) {
+    console.log(arrInput[i]);
+    console.log("nhanVienIndex: " + nhanVienIndex[i]);
+    var htmlDom = arrInput[i];
+    var id = htmlDom.id;
+    htmlDom.value = nhanVienIndex[id];
+  }
 }
-function dongModal() {
-  document.getElementById("modal-footer");
+
+//update informatio
+document.getElementById("btnCapNhat").onclick = updateValueUser;
+function updateValueUser() {
+  console.log("updateValueUser checked");
+  var nhanVien = getValueUser();
+
+  //tìm vị trí của dữ liệu đang nằm trong mảng
+  //var index = -1
+  for (var i = 0; i < arrNV.length; i++) {
+    if (nhanVien.tknv == arrNV[i].tknv) {
+      arrNV[i] = nhanVien;
+    }
+  }
+  luuDuLieuLocalStorage("arrNV", arrNV);
+  hienThiDuLieu();
 }
+
+//lọc nhân viên
+document.getElementById("btnTimNV").onclick = function () {
+  console.log("tim nv");
+  var loaiNV = document.getElementById("searchName").value;
+  console.log(loaiNV);
+
+  hienThiDuLieuDaLoc(arrNV, loaiNV);
+};
+function hienThiDuLieuDaLoc(arr, loaiNV) {
+  if (arr == undefined) {
+    arr = arrNV;
+  }
+
+  if (loaiNV == "" || loaiNV == undefined) {
+    console.log("dieu kien empty");
+    return hienThiDuLieu();
+  }
+  var content = "";
+  for (var i = 0; i < arr.length; i++) {
+    console.log("dieu kien k empty");
+    var nhanVien = arr[i];
+    var newNhanVien = new NhanVien();
+
+    nhanVien = Object.assign(newNhanVien, nhanVien);
+
+    console.log(nhanVien.xepLoai());
+    console.log(loaiNV);
+    if (nhanVien.xepLoai() == loaiNV) {
+      content += `
+          <tr>
+              <td>${nhanVien.tknv}</td>
+              <td>${nhanVien.name}</td>
+              <td>${nhanVien.email}</td>
+              <td>${nhanVien.datepicker}</td>
+              <td>${nhanVien.chucvu}</td>
+              <td>${nhanVien.tongLuong()}</td>
+              <td>${nhanVien.xepLoai()}</td>
+              <td>
+              <button onclick="xoaDuLieuUser(${
+                nhanVien.tknv
+              })" class="btn btn-danger">Xoá</button>
+              <button onclick="getInforUser(${
+                nhanVien.tknv
+              })" class="btn btn-warning ml-3">Sửa</button>
+              </td>
+          </tr>
+          `;
+      document.getElementById("tableDanhSach").innerHTML = content;
+    }
+  }
+}
+
+//clear form when click btn
+document.getElementById("btnThem").onclick = function () {
+  document.getElementById("formQLNV").reset();
+};

@@ -31,9 +31,9 @@ function NhanVien() {
     } else if (work >= 176) {
       return "Nhân viên giỏi";
     } else if (work >= 160) {
-      return "nhân viên khá";
+      return "Nhân viên khá";
     } else {
-      return "nhân viên trung bình";
+      return "Nhân viên trung bình";
     }
   };
 }
