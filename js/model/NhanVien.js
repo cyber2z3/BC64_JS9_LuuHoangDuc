@@ -28,9 +28,9 @@ function NhanVien() {
     var work = this.gioLam;
     if (work >= 192) {
       return "Nhân viên xuất sắc";
-    } else if (time >= 176) {
+    } else if (work >= 176) {
       return "Nhân viên giỏi";
-    } else if (time >= 160) {
+    } else if (work >= 160) {
       return "nhân viên khá";
     } else {
       return "nhân viên trung bình";
