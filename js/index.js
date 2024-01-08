@@ -39,9 +39,9 @@ function hienThiDuLieu(arr) {
         <td>${nhanVien.email}</td>
         <td>${nhanVien.datepicker}</td>
         <td>${nhanVien.chucvu}</td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>${nhanVien.tongLuong()}</td>
+        <td>${nhanVien.xepLoai()}</td>
+        <td>  </td>
     </tr>
     `;
     document.getElementById("tableDanhSach").innerHTML = content;
