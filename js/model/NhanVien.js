@@ -1,5 +1,5 @@
 function NhanVien() {
-  this.tknv = "";
+  this.tknv = 0;
   this.name = "";
   this.email = "";
   this.password = "";

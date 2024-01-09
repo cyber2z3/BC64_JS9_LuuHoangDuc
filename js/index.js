@@ -1,4 +1,5 @@
 var arrNV = [];
+
 function getValueUser() {
   //lấy dữ liệu 9 input bên ngoài khi người dùng nhập xong và bấm thêm sinh viên
   var arrInput = document.querySelectorAll("form input, form select");
@@ -15,14 +16,63 @@ function getValueUser() {
     var inputId = arrInput[i].id;
     var inputValue = arrInput[i].value;
     var errorId = arrError[i].id;
-    console.log("inputId: " + inputId);
-    console.log("inputValue: " + inputValue);
-    console.log("errorId: " + errorId);
-    console.log(" ");
 
-    //check validation
+    // check input
+    // console.log("inputId: " + inputId + " length: " + inputId.length);
+    // console.log("inputValue: " + inputValue + " length: " + inputValue.length);
+    // console.log("errorId: " + errorId + " length: " + errorId.length);
+    // console.log(" ");
 
-    checkEmtyValue(inputValue, errorId);
+    //check validation -------------------------------------
+    document.getElementById(errorId).style.display = "block";
+    //1. check tài khoảng nhân viên
+    if (inputId == "tknv") {
+      isValid &=
+        checkEmtyValue(inputValue, errorId) &&
+        checkMinMaxValue(inputValue, errorId, 4, 6) &&
+        checkOnlyNums(inputValue, errorId);
+    }
+    //2. check tên nhân viên
+    else if (inputId == "name") {
+      isValid &=
+        checkEmtyValue(inputValue, errorId) &&
+        checkNameValue(inputValue, errorId);
+    }
+    //3. check email
+    else if (inputId == "email") {
+      isValid &=
+        checkEmtyValue(inputValue, errorId) &&
+        checkEmailValue(inputValue, errorId);
+    }
+    //4. check passord
+    else if (inputId == "password") {
+      isValid &=
+        checkEmtyValue(inputValue, errorId) &&
+        checkPasswordValue(inputValue, errorId) &&
+        checkMinMaxValue(inputValue, errorId, 6, 10);
+    }
+    //5. check datepicker
+    else if (inputId == "datepicker") {
+      isValid &=
+        checkEmtyValue(inputValue, errorId) &&
+        checkDayValue(inputValue, errorId);
+    }
+    //6. check lương cơ bản
+    else if (inputId == "luongCB") {
+      var intInputValue = parseInt(inputValue);
+      isValid &=
+        checkEmtyValue(inputValue, errorId) &&
+        checkMinMaxInt(inputValue, errorId, 1000000, 20000000) &&
+        checkOnlyNums(inputValue, errorId);
+    }
+    //7. check số giờ làm
+    else if (inputId == "gioLam") {
+      isValid &=
+        checkEmtyValue(inputValue, errorId) &&
+        checkMinMaxInt(inputValue, errorId, 80, 200);
+    } else {
+      checkEmtyValue(inputValue, errorId);
+    }
 
     // lấy dữ liệu
     nhanVien[inputId] = arrInput[i].value;
